@@ -11,9 +11,10 @@ export function homePage(appName, appVersion) {
         </p>
         <p class="text-muted">Versión: ${appVersion}</p>
         
-        <a href="/tareas" class="btn btn-primary">Ver tareas</a>
-        <a href="/tareas/nueva" class="btn btn-outline-primary">Crear tarea</a>
+        <a href="/tareas" class="btn btn-primary"><i class="bi bi-list-check"></i> Ver tareas</a>
+        <a href="/tareas/nueva" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Crear tarea</a>
       </div>
     `
   );
 }
+

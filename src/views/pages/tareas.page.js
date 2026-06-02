@@ -18,7 +18,7 @@ export function tareasPage(tareas) {
 	let contenido = `
 		<div class="d-flex justify-content-between align-items-center mb-4">
 			<h1>Lista de tareas</h1>
-			<a href="/tareas/nueva" class="btn btn-primary">Nueva tarea</a>
+			<a href="/tareas/nueva" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nueva tarea</a>
 		</div>
 
 		<div class="card mb-4 shadow-sm">
@@ -68,14 +68,14 @@ export function tareasPage(tareas) {
 
 					<div class="mt-3">
 						<a href="/tareas/${tarea.id}" class="btn btn-sm btn-outline-primary">
-							Ver detalle
+							<i class="bi bi-eye"></i>
 						</a>
 						<a href="/tareas/${tarea.id}/editar" class="btn btn-sm btn-outline-warning">
-							Editar
+							<i class="bi bi-pencil-square"></i>
 						</a>
 						<form action="/tareas/${tarea.id}/eliminar" method="POST" class="d-inline">
 							<button type="submit" class="btn btn-sm btn-outline-danger">
-								Eliminar
+								<i class="bi bi-trash"></i>
 							</button>
 						</form>
 					</div>

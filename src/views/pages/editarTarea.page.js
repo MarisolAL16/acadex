@@ -59,8 +59,8 @@ export function editarTareaPage(tarea) {
             </select>
           </div>
 
-          <button type="submit" class="btn btn-warning">Actualizar</button>
-          <a href="/tareas" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Actualizar</button>
+          <a href="/tareas" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Cancelar</a>
         </form>
       </div>
     </div>

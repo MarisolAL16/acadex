@@ -38,8 +38,8 @@ export function nuevaTareaPage() {
 							</select>
 						</div>
 
-						<button type="submit" class="btn btn-primary">Guardar</button>
-						<a href="/tareas" class="btn btn-secondary">Cancelar</a>
+						<button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Guardar</button>
+						<a href="/tareas" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Cancelar</a>
 					</form>
 				</div>
 			</div>
