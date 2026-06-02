@@ -49,40 +49,60 @@ export function tareasPage(tareas) {
 				No hay tareas registradas.
 			</div>
 		`;
-	}
-
-	tareas.forEach(tarea => {
+	} else {
 		contenido += `
-			<div class="card mb-3 shadow-sm">
-				<div class="card-body">
-					<h5 class="card-title">${tarea.titulo}</h5>
-					<p class="card-text">${tarea.descripcion}</p>
+			<div class="table-responsive">
+				<table class="table table-striped table-hover shadow-sm">
+					<thead class="table-primary">
+						<tr>
+							<th>Título</th>
+							<th>Descripción</th>
+							<th>Estado</th>
+							<th>Prioridad</th>
+							<th class="text-center">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+		`;
 
-					<span class="badge ${obtenerBadgeEstado(tarea.estado)}">
-						${tarea.estado}
-					</span>
-
-					<span class="badge ${obtenerBadgePrioridad(tarea.prioridad)}">
-						Prioridad ${tarea.prioridad}
-					</span>
-
-					<div class="mt-3">
-						<a href="/tareas/${tarea.id}" class="btn btn-sm btn-outline-primary">
+		tareas.forEach(tarea => {
+			contenido += `
+				<tr>
+					<td class="fw-bold">${tarea.titulo}</td>
+					<td>${tarea.descripcion}</td>
+					<td>
+						<span class="badge ${obtenerBadgeEstado(tarea.estado)}">
+							${tarea.estado}
+						</span>
+					</td>
+					<td>
+						<span class="badge ${obtenerBadgePrioridad(tarea.prioridad)}">
+							Prioridad ${tarea.prioridad}
+						</span>
+					</td>
+					<td class="text-center">
+						<a href="/tareas/${tarea.id}" class="btn btn-sm btn-outline-primary" title="Ver detalle">
 							<i class="bi bi-eye"></i>
 						</a>
-						<a href="/tareas/${tarea.id}/editar" class="btn btn-sm btn-outline-warning">
+						<a href="/tareas/${tarea.id}/editar" class="btn btn-sm btn-outline-warning" title="Editar">
 							<i class="bi bi-pencil-square"></i>
 						</a>
 						<form action="/tareas/${tarea.id}/eliminar" method="POST" class="d-inline">
-							<button type="submit" class="btn btn-sm btn-outline-danger">
+							<button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="return confirm('¿Está seguro de eliminar esta tarea?')">
 								<i class="bi bi-trash"></i>
 							</button>
 						</form>
-					</div>
-				</div>
+					</td>
+				</tr>
+			`;
+		});
+
+		contenido += `
+					</tbody>
+				</table>
 			</div>
 		`;
-	});
+	}
 
 	return layout("Tareas", contenido);
 }
