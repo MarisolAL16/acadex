@@ -14,6 +14,13 @@ function obtenerBadgePrioridad(prioridad) {
 	return "bg-secondary";
 }
 
+function obtenerClaseFilaEstado(estado) {
+	if (estado === "pendiente") return "table-danger";
+	if (estado === "en progreso") return "table-warning";
+	if (estado === "completada") return "table-success";
+	return "";
+}
+
 export function tareasPage(tareas, mensaje) {
 	let contenido = `
 		<div class="d-flex justify-content-between align-items-center mb-4">

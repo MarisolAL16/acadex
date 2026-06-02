@@ -3,6 +3,7 @@ import { tareasPage } from "../views/pages/tareas.page.js";
 import { detalleTareaPage } from "../views/pages/detalleTarea.page.js";
 import { nuevaTareaPage } from "../views/pages/nuevaTarea.page.js";
 import { editarTareaPage } from "../views/pages/editarTarea.page.js";
+import { resumenPage } from "../views/pages/resumen.page.js";
 import { error404Page } from "../views/pages/error404.page.js";
 
 export function listarTareas(req, res) {
@@ -79,4 +80,18 @@ export function eliminarTarea(req, res) {
   }
 
   res.redirect("/tareas?mensaje=eliminada");
+}
+
+export function mostrarResumen(req, res) {
+  const total = tareas.length;
+  const pendientes = tareas.filter(tarea => tarea.estado === "pendiente").length;
+  const enProgreso = tareas.filter(tarea => tarea.estado === "en progreso").length;
+  const completadas = tareas.filter(tarea => tarea.estado === "completada").length;
+
+  res.send(resumenPage({
+    total,
+    pendientes,
+    enProgreso,
+    completadas
+  }));
 }
