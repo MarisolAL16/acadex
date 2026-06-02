@@ -1,6 +1,9 @@
-import { layout } from "../layout.js";
+﻿import { layout } from "../layout.js";
 
-export function editarTareaPage(tarea) {
+export function editarTareaPage(tarea, errores = null) {
+  const getClase = (campo) => errores && errores[campo] ? "form-control is-invalid" : "form-control";
+  const getMensajeError = (campo) => errores && errores[campo] ? `<div class="invalid-feedback d-block">${errores[campo]}</div>` : "";
+
   return layout(
     "Editar tarea",
     `
@@ -17,9 +20,10 @@ export function editarTareaPage(tarea) {
                 <input
                   type="text"
                   name="titulo"
-                  class="form-control"
+                  class="${getClase("titulo")}"
                   value="${tarea.titulo}"
                 >
+                ${getMensajeError("titulo")}
               </div>
 
               <div class="col-md-6">
@@ -41,9 +45,10 @@ export function editarTareaPage(tarea) {
                 <label class="form-label">Descripción</label>
                 <textarea
                   name="descripcion"
-                  class="form-control"
+                  class="${getClase("descripcion")}"
                   rows="4"
                 >${tarea.descripcion}</textarea>
+                ${getMensajeError("descripcion")}
               </div>
 
               <div class="col-md-6">

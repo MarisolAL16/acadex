@@ -6,6 +6,21 @@ import { editarTareaPage } from "../views/pages/editarTarea.page.js";
 import { resumenPage } from "../views/pages/resumen.page.js";
 import { error404Page } from "../views/pages/error404.page.js";
 
+// Función de validación
+function validarTarea(titulo, descripcion) {
+  const errores = {};
+  
+  if (!titulo || titulo.trim() === "") {
+    errores.titulo = "El título es obligatorio";
+  }
+  
+  if (!descripcion || descripcion.trim().length < 10) {
+    errores.descripcion = "La descripción debe tener al menos 10 caracteres";
+  }
+  
+  return Object.keys(errores).length > 0 ? errores : null;
+}
+
 export function listarTareas(req, res) {
   const estado = req.query.estado;
   const mensaje = req.query.mensaje;
@@ -28,10 +43,26 @@ export function verDetalleTarea(req, res) {
 }
 
 export function mostrarFormularioNuevaTarea(req, res) {
-  res.send(nuevaTareaPage());
+  const errores = req.query.errores ? JSON.parse(decodeURIComponent(req.query.errores)) : null;
+  const valores = req.query.valores ? JSON.parse(decodeURIComponent(req.query.valores)) : null;
+  res.send(nuevaTareaPage(errores, valores));
 }
 
 export function crearTarea(req, res) {
+  const errores = validarTarea(req.body.titulo, req.body.descripcion);
+  
+  if (errores) {
+    const valores = {
+      titulo: req.body.titulo,
+      descripcion: req.body.descripcion,
+      estado: req.body.estado,
+      prioridad: req.body.prioridad
+    };
+    const queryErrors = encodeURIComponent(JSON.stringify(errores));
+    const queryValores = encodeURIComponent(JSON.stringify(valores));
+    return res.redirect(`/tareas/nueva?errores=${queryErrors}&valores=${queryValores}`);
+  }
+
   const nuevaTarea = {
     id: tareas.length + 1,
     titulo: req.body.titulo,
@@ -52,7 +83,8 @@ export function mostrarFormularioEditarTarea(req, res) {
     return res.status(404).send(error404Page());
   }
 
-  res.send(editarTareaPage(tarea));
+  const errores = req.query.errores ? JSON.parse(decodeURIComponent(req.query.errores)) : null;
+  res.send(editarTareaPage(tarea, errores));
 }
 
 export function actualizarTarea(req, res) {
@@ -61,6 +93,13 @@ export function actualizarTarea(req, res) {
 
   if (!tarea) {
     return res.status(404).send(error404Page());
+  }
+
+  const errores = validarTarea(req.body.titulo, req.body.descripcion);
+  
+  if (errores) {
+    const queryErrors = encodeURIComponent(JSON.stringify(errores));
+    return res.redirect(`/tareas/${id}/editar?errores=${queryErrors}`);
   }
 
   tarea.titulo = req.body.titulo;
