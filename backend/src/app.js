@@ -4,7 +4,6 @@ import tareasRoutes from "./routes/tareas.routes.js";
 import { loggerMiddleware } from "./middlewares/logger.middleware.js";
 import { homePage } from "./views/pages/home.page.js";
 import { error404Page } from "./views/pages/error404.page.js";
-import { mostrarResumen } from "./controllers/tareas.controller.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -21,14 +20,14 @@ app.get("/", (req, res) => {
   );
 });
 
-app.use("/tareas", tareasRoutes);
-app.get("/resumen", mostrarResumen);
+app.use("/api/tareas", tareasRoutes);
 
 app.use((req, res) => {
-  res.status(404).send(error404Page());
+  res.status(404).json({error: "Ruta no encontrada"});
 });
 
 app.listen(PORT, () => {
-  console.log(`${process.env.APP_NAME} ejecutándose en http://localhost:${PORT}`);
+  console.log(
+    `${process.env.APP_NAME} ejecutándose en http://localhost:${PORT}`
+  );
 });
-
